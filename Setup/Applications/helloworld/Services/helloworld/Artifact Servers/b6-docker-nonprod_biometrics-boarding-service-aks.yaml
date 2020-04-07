@@ -1,8 +1,0 @@
-harnessApiVersion: '1.0'
-type: ARTIFACTORY
-dockerRepositoryServer: https://artifactory.it.jetblue.com/
-imageName: biometrics-boarding-service-aks
-metadataOnly: true
-repositoryName: b6-docker-nonprod
-repositoryType: docker
-serverName: harness-artifactory
