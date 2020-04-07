@@ -65,4 +65,25 @@ spec:
 
 
         image: artifactory.it.jetblue.com/b6-docker-nonprod/bk-lfs:4.2.0-rc-3
+        ports:
+
+        - containerPort: 8080
+
+        volumeMounts:
+
+        - name: bk-lfs
+          mountPath: /opt/config
+
+
+
+      volumes:
+
+      - name: bk-lfs
+        configMap:
+
+          name: bk-lfs4.2.0-rc-3
+
+
+
+
 
