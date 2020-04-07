@@ -1,89 +1,19 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-
-  name: bk-lfs-deployment
-  annotations:
-    kubernetes.io/change-cause: Update to 4.2.0-rc-3 Thursday March 19 2020 03:12
+  name: hello-kubernetes
 spec:
-  progressDeadlineSeconds: 300
-  minReadySeconds: 60
-  revisionHistoryLimit: 5
-  replicas: 1
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxSurge: 100%
-      maxUnavailable: 0%
+  replicas: 3
   selector:
     matchLabels:
-      app: bk-lfs
+      app: hello-kubernetes
   template:
     metadata:
-
       labels:
-        app: bk-lfs
-        version: "4.2.0-rc-3"
-
-
-        canary: "false"
+        app: hello-kubernetes
     spec:
-      imagePullSecrets:
-        - name: artifactory.b6nonprod.read.secret
       containers:
-      - name: lfs
-        env:
-        - name: B6_BUILD_ID
-          value: "4.2.0-rc-3"
-        - name: B6_ENV
-          value: "int"
-        - name: B6_TIMESTAMP
-          value: "202003190312"
-
-
-
-        - name:  APPDYNAMICS_CONTROLLER_SSL_ENABLED
-          value: "True"
-        - name:  APPDYNAMICS_AGENT_NODE_NAME
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.name
-        - name: APPDYNAMICS_CONTROLLER_HOST_NAME
-          value: "jetblue-test.saas.appdynamics.com"
-        - name: APPDYNAMICS_CONTROLLER_PORT
-          value: "443"
-        - name: APPDYNAMICS_AGENT_TIER_NAME
-          value: "booking api"
-        - name: APPDYNAMICS_AGENT_ACCOUNT_NAME
-          value: "jetblue-test"
-        - name: APPDYNAMICS_AGENT_APPLICATION_NAME
-          value: "GCP INT"
-        - name: APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY
-          value: "29767b8f-91c0-4dbd-9c34-f3591dc552bb"
-        - name:  APPDYNAMICS_JAVA_AGENT_REUSE_NODE_NAME
-          value: "true"
-
-
-        image: artifactory.it.jetblue.com/b6-docker-nonprod/bk-lfs:4.2.0-rc-3
+      - name: hello-kubernetes
+        image: paulbouwer/hello-kubernetes:1.7
         ports:
-
         - containerPort: 8080
-
-        volumeMounts:
-
-        - name: bk-lfs
-          mountPath: /opt/config
-
-
-
-      volumes:
-
-      - name: bk-lfs
-        configMap:
-
-          name: bk-lfs4.2.0-rc-3
-
-
-
-
-
